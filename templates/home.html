@@ -13,13 +13,49 @@
     <link rel="stylesheet" type="text/css" href="{% static "/css/style.css" %}">
 </head>
 <body>
+<!-- Start header  -->
+<header class='header'>
+     <a href="#" class="logo"> Portfolio </a>
+     <div class="bx bx-menu" id="menu-icon" ></div>
 <!-- navbar section -->
-     <nav class="navbar">
-     <a href=""><i class="fas fa-home"></i> <span>Home </span></a>
-     <a href=""><i class="fas fa-user"></i> <span>About</span></a>
-     <a href=""><i class="fas fa-briefcase"></i> <span>Portfolio</span></a>
-     <a href=""><i class="fas fa-blog"></i> <span>Blog</span></a>
-     <a href=""><i class="fas fa-address-book"></i> <span>Contact</span></a>
-     </nav>
+     <link rel="stylesheet" type="text/css" href="{% static "/css/style.css"%}">
+     <ul class="navbar">
+     <li><a href=""><i class="fas fa-home"></i> <span>Home </span></a> </li>
+     <li><a href=""><i class="fas fa-user"></i> <span>About</span></a> </li>
+     <li><a href=""><i class="fas fa-briefcase"></i> <span>Portfolio</span></a> </li>
+     <li><a href=""><i class="fas fa-blog"></i> <span>Blog</span></a> </li>
+     <li><a href=""><i class="fas fa-address-book"></i> <span>Contact</span></a> </li>
+     </ul>
+     <a href='' class='h-btn' > Let's Talk </a>
+</header>
+
+<!-- HomePage -->
+<section class="home" id="home">
+   <div class="home-text">
+     <h4> Hello, my name is </h4>
+     <h1> Phenolah <span> Awuor</span></h1>
+     <h3> I am a Backend web developer <h3>
+     <div class="newsletter">
+       <form >
+          <input type="email" name="email" id="mail" placeholder="Enter your email">
+          <input type="submit" name="submit" value="Let's start">
+       </form>
+     </div>
+   </div>
+</section>
+<section class="about" id="about">
+  <div class="about-img">
+     <img src="{% static 'images/Skincare.JPG'%}">
+  </div>
+  <div class="about-text">
+    <h2> About Me</h2>
+    <h5> Just <span> a Dev </span></h5>
+    <p> I am a backend developer with a strong practical experience in web development. Responsible for designing,
+    developing, testing and maintaining web applications that are efficient, reliable and easy to use
+    I have experience with a variety of programming languages and platforms and have worked icon
+    different project. A quick avid learner and open to working on challenging problems.</p>
+  </div>
+</section>
 </body>
 </html>
+
