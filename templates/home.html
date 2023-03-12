@@ -144,13 +144,26 @@
   <h2>Hire Me</h2>
   <p> I am available for freelance work </p>
   <form action="">
-  <input type="" placeholder="Your name" required>
-  <input type='email' name=''  id='' placeholder='Your Email' required>
-  <input type='' placeholder='Write a subject' required>
-  <textarea  name='' id='' cols='30' rows='10' placeholder='Your message' >
-   </textarea>
-   <input type='submit' name='' value='submit' class='send'>
-  </form>
+      <h3> Name </h3>
+      <div>
+      {{form.name}}
+      </div>
+
+      <h3> Email </h3>
+      <div>
+      {{form.email}}
+      </div>
+
+       <h3> Subject </h3>
+      <div>
+      {{form.subject}}
+      </div>
+
+       <h3> Message </h3>
+      <div class="message">
+      {{form.message}}
+      </div>
+
   </div>
   <div class='contact-img'>
       <img src="{% static 'images/Skincare.JPG'%}" width="400px" >
