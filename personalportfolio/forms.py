@@ -19,4 +19,9 @@ class ContactForm(forms.Form):
         'name': 'subject',
         'class': 'form-control',
     }))
-    message=forms.TextInput()
+    message=forms.CharField(widget=forms.TextInput(attrs={
+        'placeholder': 'Enter your message',
+        'type': 'text',
+        'name': 'messages',
+        'class': 'form-control',
+    }))
