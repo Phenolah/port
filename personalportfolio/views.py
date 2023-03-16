@@ -5,14 +5,26 @@ from django.views.generic.list import ListView
 from django.core.mail import send_mail, BadHeaderError
 # Create your views here.
 
-class HomeView(ListView):
+def home(request):
+    return render(request, 'home.html')
+
+
+def about(request):
+    return render(request,'about.html')
+
+def skills(request):
+    return render(request, 'skills.html')
+
+def portfolio(request):
+    return render(request, 'portfolio.html')
+class ContactView(ListView):
     context_object_name = 'skills'
     def get(self, *args, **kwargs):
         form = ContactForm()
         context = {
             'form': form,
         }
-        return render(self.request, 'home.html', context)
+        return render(self.request, 'contact.html', context)
     def get(self, *args, **kwargs):
         form = ContactForm()
         context={
@@ -33,9 +45,9 @@ class HomeView(ListView):
                     return HttpResponse("Invalid header found ")
                 return redirect('success')
                 context = {'success': True}
-        return render(self.request, 'home.html', context)
+        return render(self.request, 'contact.html', context)
+
 
 def successView(request):
     return HttpResponse (request, "Success! Thank your for your message. I will get back to you as soon as possible:)")
-
 
