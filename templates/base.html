@@ -1,0 +1,39 @@
+{% load static %}
+{%  load crispy_forms_tags%}
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA_Compatible" content="IE+edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="author" content="Did Coding Limited & James Granger Design ">
+    <meta>
+    <title> Phenolah's Portfolio Website </title>
+    <link rel="stylesheet" href="https://unpkg.com/boxicons@latest/css/boxicons.min.css">
+    <link rel="canonical" href="{{request.post}}"/>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" integrity="sha512-iBBXm8fW90+nuLcSKlbmrPcLa0OT92xO1BIsZ+ywDWZCvqsWgccV3gFoRBv0z+8dLJgyAHIhR35VZc2oM/gI1w==" crossorigin="anonymous" />
+    <link rel="stylesheet" type="text/css" href="{% static "/css/style.css" %}">
+</head>
+<body>
+<!-- Start header  -->
+<header class='header'>
+     <a href="#" class="logo"> Portfolio </a>
+     <div class="bx bx-menu" id="menu-icon" ></div>
+<!-- navbar section -->
+     <link rel="stylesheet" type="text/css" href="{% static "/css/style.css"%}">
+     <ul class="navbar">
+     <li><a href={% "url 'homepage' " %}><i class="fas fa-home"></i> <span>Home </span></a> </li>
+     <li><a href={%"url 'about'"%}><i class="fas fa-user"></i> <span>About</span></a> </li>
+     <li><a href={%"url 'skills'"%}><i class="fas fa-briefcase"></i> <span>Skills</span></a> </li>
+     <li><a href={%"url 'portfolio'"%}><i class="fas fa-briefcase"></i> <span>Portfolio</span></a> </li>
+     <li><a href={%"url 'contact'"%}><i class="fas fa-address-book"></i> <span>Contact</span></a> </li>
+     </ul>
+     <a href='' class='h-btn' > Let's Talk </a>
+</header>
+{% block content%}
+{% endblock %}
+<div class="footer">
+  <p> Copyright @ 2023 Phenolah Awuor. All Rights Reserved. </p>
+</div>
+</body>
+</html>

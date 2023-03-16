@@ -1,0 +1,42 @@
+{% extends 'base.html'%}
+{% load static %}
+{%block content%}
+<!-- PortfolioPage -->
+
+<section class='portfolio' id='portfolio'>
+   <div class='center'>
+      <h2> A snippet of some of my Projects! </h2>
+      <p>A showcase of some of my Projects I designed from scratch.
+      Both self initiated and tutorial based.
+      For more projects, you can visit my Github account where I showcase all my latest projects.</p>
+   </div>
+
+   <div class='portfolio-content'>
+      <div class='box'>
+         <img src="{% static 'images/Skincare.JPG'%}" width="250px" >
+         <p>Skinhub Website </p>
+         <h5> This is my skinhub project </h5>
+      </div>
+
+       <div class='box'>
+         <img src="{% static 'images/Skincare.JPG'%}" width="400px" >
+         <p>Skinhub Website </p>
+         <h5> This is my skinhub project </h5>
+      </div>
+
+      <div class='box'>
+         <img src="{% static 'images/Skincare.JPG'%}" width="400px" >
+         <p>Skinhub Website </p>
+         <h5> This is my skinhub project </h5>
+      </div>
+
+      <div class='box'>
+         <img src="{% static 'images/Skincare.JPG'%}" width="400px" >
+         <p>Skinhub Website </p>
+         <h5> This is my skinhub project </h5>
+      </div>
+
+   </div>
+</section>
+
+{% endblock%}
