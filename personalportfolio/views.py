@@ -15,8 +15,14 @@ def about(request):
 def skills(request):
     return render(request, 'skills.html')
 
-def portfolio(request):
-    return render(request, 'portfolio.html')
+class PortfolioView(generic.ListView):
+    model = PortfolioProjects
+    template_name = 'portfolio.html'
+    paginate_by = 10
+
+class PortfolioDetailView(generic.DetailView):
+    model = PortfolioProjects
+    template_name = 'portfoliodetail.html'
 class ContactView(ListView):
     context_object_name = 'skills'
     def get(self, *args, **kwargs):
