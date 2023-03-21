@@ -15,6 +15,17 @@ def about(request):
 def skills(request):
     return render(request, 'skills.html')
 
+def blog(request):
+    return render(request, 'blog.html')
+
+class BlogDetailView(generic.DetailView):
+    model = Blog
+    template_name = 'blogdetail.html'
+
+class CertificateView(generic.ListView):
+    model = Certificate
+    template_name = 'certificate.html'
+    paginate_by = 4
 class PortfolioView(generic.ListView):
     model = PortfolioProjects
     template_name = 'portfolio.html'
