@@ -49,14 +49,14 @@ class PortfolioProfile(models.Model):
     skills = models.ManyToManyField(Skills, blank=True)
     about = models.TextField(blank=True, null=True)
 
-#class Media(models.Model):
-    #class Meta:
-        #verbose_name_plural='media files'
-        #verbose_name='media'
-    #image = models.ImageField(blank=True, null=True, upload_to='media')
-    #url = models.URLField(blank=True, null=True)
-    #name = models.CharField(max_length=200,  blank=True, null=True)
-    #is_image = models.BooleanField(default=True)
+class Media(models.Model):
+    class Meta:
+        verbose_name_plural='media files'
+        verbose_name='media'
+    image = models.ImageField(blank=True, null=True, upload_to='media')
+    url = models.URLField(blank=True, null=True)
+    name = models.CharField(max_length=200,  blank=True, null=True)
+    is_image = models.BooleanField(default=True)
 
     #def save(self, *args, **kwargs):
         #if self.url:
@@ -92,3 +92,14 @@ class Certificate(models.Model):
     is_active = models.BooleanField(default=True)
     
 
+class Blog(models.Model):
+    class Meta:
+        verbose_name_plural = 'Blog profiles'
+        verbose_name = 'Blog'
+
+    author = models.CharField(max_length=200, blank=True, null=True)
+    name = models.CharField(max_length=200, blank=True, null=True)
+    description = models.TextField(null=True, blank=True)
+    body = RichTextField(blank=True, null=True)
+    slug = models.SlugField(null=True, blank=True)
+    image = models.ImageField(blank=True, null=True, upload_to="blog")
