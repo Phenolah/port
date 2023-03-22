@@ -6,14 +6,27 @@ from django.core.mail import send_mail, BadHeaderError
 # Create your views here.
 
 def home(request):
-    return render(request, 'home.html')
+    home= Home.objects.all()
+    context={
+        'home': home
+    }
+    return render(request, 'home.html', context)
+
 
 
 def about(request):
-    return render(request,'about.html')
+    about = About.objects.all()
+    context = {
+        'about': about
+    }
+    return render(request,'about.html', context)
 
 def skills(request):
-    return render(request, 'skills.html')
+    skills = Skills.objects.all()
+    context: {
+        'skills': skills
+    }
+    return render(request, 'skills.html', context)
 
 def blog(request):
     return render(request, 'blog.html')
