@@ -33,3 +33,7 @@ class ContactForm(forms.ModelForm):
     class Meta:
         model = PortfolioProfile
         fields = ('name', 'email', 'subject', 'message')
+class CvFileForm(forms.ModelForm):
+    class Meta:
+        model = Home
+        fields = ('cv',)
