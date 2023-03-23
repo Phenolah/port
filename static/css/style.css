@@ -112,7 +112,7 @@ section{
 .home{
     height: 100vh;
     width: 100%
-    background:;
+    background:var(--second-bg-color);
     background-size: cover;
     background-position: center;
     position: relative;
@@ -122,19 +122,20 @@ section{
 }
 .home-text h1{
     margin: 20px 0px 20px;
-    font-size: var(--big-font);
+    font-size: 4.2rem;
 }
 span{
    color: var(--main-color);
 }
 .home-text h3{
-   font-size: 25px;
+   font-size: 20px;
    margin-bottom: 55px;
 }
 .home-text h4{
    color: #585c63;
-   font-size: 20px;
+   font-size: 15px;
    letter-spacing: 2px;
+   margin-bottom: 0;
 }
 .newsletter form{
    width: 380px;
@@ -180,6 +181,7 @@ header.sticky{
    grid-template-columns: repeat(2, 2fr);
    align-items: center;
    grid-gap: 2rem;
+   margin-top: 20px;
 }
 
 .about-img img{
@@ -190,7 +192,7 @@ header.sticky{
 }
  .about-text h2{
     font-size: var(--h2-font);
-    margin-bottom: 10px;
+    margin-bottom: 5px;
  }
 
  .about-text h5{
@@ -207,6 +209,7 @@ header.sticky{
     font-size: var(--p-font);
     margin-bottom: 45px;
 }
+
 .download-btn{
     display: inline-block;
     background: var(--main-color);
@@ -216,14 +219,40 @@ header.sticky{
     padding: 13px 30px;
     border-radius: 30px;
     transition: ease .35s;
-    margin-top: 20px;
+    margin-top: 0;
+    width: 185px;
+    right: 200;
 }
  .download-btn:hover{
     transform: translateY(-8px);
     border: 2px solid var(--main-color);
     background: transparent;
  }
- .dropbtn{
+ .drop{
+     background: var(--main-color);
+     font-weight: 600;
+     color: var(--text-color);
+ }
+ /*.dropbtn{
+    padding: 0 20px;
+    height: 40px;
+    display: inline-block;
+    line-height: 42px;
+    background: #f9004d;
+    color: var(--text-color);
+    border: none;
+    border-radius: 30px;
+    font-size: 14px;
+    font-weight: 500;
+    letter-spacing: 1px;
+    transition: all .30s;
+    position: absolute;
+
+}
+.dropbtn:hover{
+    transform: translateY(-5px);
+}*/
+.dropbtn{
     display: inline-block;
     background: var(--main-color);
     color: var(--text-color);
@@ -233,12 +262,24 @@ header.sticky{
     border-radius: 30px;
     transition: ease .35s;
     margin-top: 20px;
+    margin-bottom: 50px;
 }
 .dropbtn:hover{
     transform: translateY(-8px);
     border: 2px solid var(--main-color);
     background: transparent;
  }
+ .col-2{
+     display: flex;
+     justify-content: flex-start;
+     align-items: flex-start;
+     background color: var(--second-bg-color);
+ }
+ .buttons-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
 
 .skills{
    background: var(--bg-color);
@@ -488,4 +529,74 @@ header.sticky{
        width: 760px;
        height: auto;
    }
+}
+.blog{
+           padding: 50px 0;
+           display: flex;
+           justify-content: center;
+           align-items: center
+           flex-direction: column;
+           background: #ffffff;
+           border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+
+}
+.blog-page{
+         background: #ffffff;
+         /*background: radial-gradient(#fff, #F2D2BD);*/
+}
+.blog-page .img{
+        text-align: center ;
+        padding: 40px 20px;
+        box-shadow: 0 0 20px 0px rgba(0, 0, 0, 0.1);
+        cursor: pointer;
+        transition: transform 0.5;
+}
+
+.blog-page .img{
+        width: 50px
+        margin-top: 20px
+        border-radius: 50%
+}
+.blog-page img :hover{
+         transform: translateY(-10px);
+}
+
+.blog-heading{
+           display: flex;
+           justify-content: center;
+           align-items: center;
+           flex-direction: column;
+
+}
+.blog-heading span{
+          color: #aa6c39;
+}
+.blog-heading h3{
+          font-size: 2.4rem;
+          color: #2b2b2b;
+          font-weight: 600;
+}
+.blog-container{
+           display: flex;
+           justify-content: center;
+           align-items: center;
+           margin: 20px 0px;
+           flex wrap: wrap;
+           border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+}
+.blog-box{
+          width: 350px;
+          background-color: #ffffff;
+          border: 1px solid #ececec;
+          margin: 20px;
+}
+.blog-img{
+         width: 100%;
+         height: 100%
+}
+.blog-img img{
+          width: 100%;
+          height: 100%;
+          object-fit: cover;
+          object-position: center;
 }
