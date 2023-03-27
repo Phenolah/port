@@ -4,22 +4,20 @@ from .models import *
 from django.views.generic.list import ListView
 from django.contrib import messages
 from django.views import generic
-from django.core.mail import send_mail, BadHeaderError
 # Create your views here.
 
 class HomeView(generic.TemplateView):
     template_name = 'home.html'
-
+    context_object_name = 'homes'
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        home = Home.objects.all
+        home = Home.objects.all()
         about = About.objects.all()
         skills= Skills.objects.all()
         certificates = Certificate.objects.filter(is_active=True)
         blogs = Blog.objects.filter(is_active=True)
         portfolio = PortfolioProjects.objects.filter(is_active=True)
-
 
         context['certificates'] = certificates
         context['blogs'] = blogs
@@ -41,16 +39,10 @@ class HomeView(generic.TemplateView):
             return render(request, 'home.html', {'form': form})
 
 
-
-
-
-
-def about(request):
-    about = About.objects.all()
-    context = {
-        'about': about
-    }
-    return render(request,'about.html', context)
+class AboutView(generic.ListView):
+    model = About
+    template_name = 'about.html'
+    context_object_name = 'abouts'
 
 def skills(request):
     context={}
