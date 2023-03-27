@@ -5,13 +5,17 @@
 
 <section class="about" id="about">
   <div class="about-img">
-     <img src="{% static 'images/Skincare.JPG'%}" width="400px" >
+     <img src="{% static 'images/about.jpg'%}" width="400px" >
   </div>
   <div class="about-text">
+    {% for about in abouts%}
     <h2> {{about.subject}}</h2>
     <h5> Just <span> a Dev </span></h5>
     <p> {{about.description}}</p>
+    {% endfor %}
   </div>
 </section>
+
+
 
 {% endblock %}
