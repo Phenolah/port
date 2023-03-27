@@ -13,15 +13,16 @@
      <h3> I am a Backend web developer <h3>
      </div>
      <div class="column-2">
-      <img scr="" alt=" no image " style="float: right;">
+     <img src="{% static 'images/avatar.JPG'%}" width="350px" style="float: right; position:absolute; top:130; right:100;">
      </div>
      </div>
    </div>
    <div class="col-2">
+   {% for home in home%}
       <div class="buttons-container">
       <form action="" method='POST' enctype="multipart/form-data" >
       {%csrf_token%}
-      <button><a href="{{object.cv.url}}" class="download-btn">Download CV</a></button>
+      <button><a href="{{home.cv.url}}" class="download-btn">Download CV</a></button>
       </form>
       <button class="dropbtn">
       <select name="" id="" class="">
@@ -32,20 +33,19 @@
       <option href="">Github</option>
       </select>
       </button>
-
+    {% endfor %}
    </div>
 </section>
 <section class="about" id="about">
   <div class="about-img">
-     <img src="{% static 'images/Skincare.JPG'%}" width="400px" >
+     <img src="{% static 'images/about.jpg'%}" width="400px" >
   </div>
   <div class="about-text">
-    <h2> About Me</h2>
+    {% for about in about%}
+    <h2> {{about.subject}}</h2>
     <h5> Just <span> a Dev </span></h5>
-    <p> I am a backend developer with a strong practical experience in web development. Responsible for designing,
-    developing, testing and maintaining web applications that are efficient, reliable and easy to use
-    I have experience with a variety of programming languages and platforms and have worked icon
-    different project. A quick avid learner and open to working on challenging problems.</p>
+    <p> {{about.description}}</p>
+    {% endfor %}
   </div>
 </section>
 <section class="skills" id="skills">
