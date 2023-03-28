@@ -91,6 +91,9 @@ class Certificate(models.Model):
     title = models.CharField(max_length=200, null=True, blank=True)
     description = models.CharField(max_length=500, blank=True, null=True)
     is_active = models.BooleanField(default=True)
+    
+    def __str__(self):
+        return self.name
 
 class Blog(models.Model):
     class Meta:
