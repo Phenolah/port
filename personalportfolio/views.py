@@ -36,21 +36,27 @@ class HomeView(generic.TemplateView):
                 return redirect('homepage')
             else:
                 form = CvFileForm()
-            return render(request, 'home.html', {'form': form})
+            return render(request, 'home.html', {'form': form })
 
 
 class AboutView(generic.ListView):
     model = About
     template_name = 'about.html'
-    context_object_name = 'abouts'
+    context_object_name = 'about'
 
-def skills(request):
-    context={}
-    skills = Skills.objects.all()
-    context: {
-        'skills': skills
-    }
-    return render(request, 'skills.html', context)
+class SkillsView(generic.ListView):
+    model = Skills
+    template_name = 'skills.html'
+    context_object_name = "skills"
+    def upload_image(self, request):
+        if request.method == 'POST':
+            form = SkillsImageForm(request.POST,request.FILES)
+            if form.is_valid():
+                image_upload = SkillsImageForm(request.FILES['images'])
+                image_upload.save()
+            else:
+                form = SkillsImageForm()
+            return render(request, 'skills.html', {'form': form})
 
 def blog(request):
     return render(request, 'blog.html')
@@ -84,8 +90,6 @@ class ContactView(generic.FormView):
         form.save()
         messages.success(self.request, "Success! Thank you for contacting me. I'll get back to you as soon as possible")
         return super().form_valid(form)
-
-
 
 
 
