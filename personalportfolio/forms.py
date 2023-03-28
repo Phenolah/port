@@ -37,3 +37,8 @@ class CvFileForm(forms.ModelForm):
     class Meta:
         model = Home
         fields = ('cv',)
+ class SkillsImageForm(forms.ModelForm):
+    class Meta:
+        model=Skills
+        fields =('image',)
+       
