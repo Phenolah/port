@@ -52,8 +52,8 @@ class SkillsView(generic.ListView):
         if request.method == 'POST':
             form = SkillsImageForm(request.POST,request.FILES)
             if form.is_valid():
-                image_upload = SkillsImageForm(request.FILES['images'])
-                image_upload.save()
+                skills_photo = Skills()
+                skills_photo.save()
             else:
                 form = SkillsImageForm()
             return render(request, 'skills.html', {'form': form})
@@ -90,7 +90,4 @@ class ContactView(generic.FormView):
         form.save()
         messages.success(self.request, "Success! Thank you for contacting me. I'll get back to you as soon as possible")
         return super().form_valid(form)
-
-
-
 
