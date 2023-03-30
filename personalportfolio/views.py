@@ -1,4 +1,4 @@
-from django.shortcuts import render, HttpResponse, redirect
+ffrom django.shortcuts import render, HttpResponse, redirect
 from .forms import *
 from .models import *
 from django.views.generic.list import ListView
@@ -26,17 +26,15 @@ class HomeView(generic.TemplateView):
         context['home'] = home
         context['skills'] = skills
         return context
-
-    def upload_file(self, request):
-        if request.method == 'POST':
-            form = CvFileForm(request.POST,request.FILES)
-            if form.is_valid():
-                cv_upload = CvFileForm(request.FILES['cv'])
-                cv_upload.save()
-                return redirect('homepage')
-            else:
-                form = CvFileForm()
-            return render(request, 'home.html', {'form': form })
+    def post(self, request, *args, **kwargs):
+        form = CvFileForm(request.POST, request.FILES)
+        if form.is_valid():
+            form.save()
+            return redirect('homepage')
+        else:
+            context = self.get_context_data(**kwargs)
+            context['form'] = form
+            return self.render_to_response(context)
 
 
 class AboutView(generic.ListView):
@@ -90,4 +88,3 @@ class ContactView(generic.FormView):
         form.save()
         messages.success(self.request, "Success! Thank you for contacting me. I'll get back to you as soon as possible")
         return super().form_valid(form)
-
