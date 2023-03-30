@@ -14,27 +14,28 @@
      <h3> I am a Backend web developer <h3>
      </div>
      <div class="column-2">
-     <img src="{% static 'images/avatar.JPG'%}" width="350px" style="float: right; position:absolute; top:100; right:100;">
+     <img src="{% static 'images/avatar.JPG'%}" width="350px" style="float: right; position:absolute; top:80; right:100;">
      </div>
      </div>
    </div>
    <div class="col-2">
-   {% for home in home%}
+   {% for home in home %}
       <div class="buttons-container">
       <form action="" method='POST' enctype="multipart/form-data" >
       {%csrf_token%}
       <button><a href="{{home.cv.url}}" class="download-btn">Download CV</a></button>
-      </form>
-      <button class="dropbtn">
-      <select name="" id="" class="">
+       </form>
+
+      <select name="" id="" class="dropbtn">
       <option  class="drop"value="" selected disabled > Contact Me </option>
-      <option href="">Email</option>
+      <option  href="">Email</option>
       <option href="">Phone Number</option>
-      <option href="">Linkedin</option>
-      <option href="">Github</option>
+      <button href="{{home.linkedin }}"><option >Linkedin</option></button>
+      <option value="{{ home.github }}">Github</option>
+
+      {% endfor %}
       </select>
-      </button>
-    {% endfor %}
+
    </div>
    </div>
 </section>
@@ -126,19 +127,19 @@
     <div class="container">
         <div class="row">
             <div class="col-3">
-                <img src="{% static "image/Skincare.JPG"%}"  alt="">
+                <img src="{% static "images/Skincare.JPG"%}"  alt="">
                 <br>
                 <br>
                 <h3> Hyperpigmentation Diary</h3>
             </div>
             <div class="col-3">
-                <img src="{% static "image/Skincare.JPG"%}"  alt="">
+                <img src="{% static "images/Skincare.JPG"%}"  alt="">
                 <br>
                 <br>
                 <h3> Hydrated babe</h3>
             </div>
             <div class="col-3">
-                <img src="{% static "image/Skincare.JPG"%}"  alt="">
+                <img src="{% static "images/Skincare.JPG"%}"  alt="">
                 <br>
                 <br>
                 <h3> Sunscreen importance</h3>
