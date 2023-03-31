@@ -1,5 +1,6 @@
 {% extends 'base.html'%}
 {% load static %}
+{% load cloudinary %}
 {% load crispy_forms_tags %}
 {%block content%}
 <!-- SkillsPage -->
@@ -16,15 +17,18 @@
 
    <div class="row">
    {% if image.url%}
-   <form action="" method='POST' enctype="multipart/form-data" >
+
       {%csrf_token%}
-     <img src="{{skill.image.url }}">
+     <img src="{% cloudinary 'pjj00x6yoadzkhdhuwwg' %}">
      <i class='bx bx-cast'> <img src="{{skill.image.url }}"></i>
+     {# Renders an IMG tag for a CloudinaryImage objects. #}
+            {# THUMBNAIL defined in context_processors #}
+            {% cloudinary photo.image THUMBNAIL %}
      </form>
      {% else %}
      <p> image does not exist</p>
      {% endif%}
-     </form>
+
 
      <h3>{{skill.name}}</h3>
      <p> {{skill.description}}</p>
