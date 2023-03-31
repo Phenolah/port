@@ -1,9 +1,10 @@
-ffrom django.shortcuts import render, HttpResponse, redirect
+
+    from django.shortcuts import render, HttpResponse, redirect
 from .forms import *
 from .models import *
-from django.views.generic.list import ListView
 from django.contrib import messages
 from django.views import generic
+from django.views.generic import CreateView,ListView
 # Create your views here.
 
 class HomeView(generic.TemplateView):
@@ -42,19 +43,26 @@ class AboutView(generic.ListView):
     template_name = 'about.html'
     context_object_name = 'about'
 
-class SkillsView(generic.ListView):
+class SkillsView(CreateView):
     model = Skills
+    form_class = SkillsImageForm
     template_name = 'skills.html'
     context_object_name = "skills"
-    def upload_image(self, request):
-        if request.method == 'POST':
-            form = SkillsImageForm(request.POST,request.FILES)
-            if form.is_valid():
-                skills_photo = Skills()
-                skills_photo.save()
-            else:
-                form = SkillsImageForm()
-            return render(request, 'skills.html', {'form': form})
+
+
+    def get_context_data(self, **kwargs):
+        context = super(SkillsView, self).get_context_data(**kwargs)
+        context['skills'] = Skills.objects.all()
+        return context
+    #def upload_image(self, request):
+     #   if request.method == 'POST':
+      #      form = SkillsImageForm(request.POST,request.FILES)
+        #    if form.is_valid():
+         #       skills_photo = Skills()
+          #      skills_photo.save()
+           # else:
+            #    form = SkillsImageForm()
+            #return render(request, 'skills.html', {'form': form})
 
 def blog(request):
     return render(request, 'blog.html')
@@ -88,3 +96,4 @@ class ContactView(generic.FormView):
         form.save()
         messages.success(self.request, "Success! Thank you for contacting me. I'll get back to you as soon as possible")
         return super().form_valid(form)
+
