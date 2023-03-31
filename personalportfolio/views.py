@@ -78,6 +78,7 @@ class PortfolioView(generic.ListView):
     model = PortfolioProjects
     template_name = 'portfolio.html'
     paginate_by = 10
+    context_object_name = 'portfolios'
 
 class PortfolioDetailView(generic.DetailView):
     model = PortfolioProjects
