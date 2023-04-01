@@ -1,5 +1,4 @@
-
-    from django.shortcuts import render, HttpResponse, redirect
+from django.shortcuts import render, HttpResponse, redirect
 from .forms import *
 from .models import *
 from django.contrib import messages
@@ -66,14 +65,23 @@ class SkillsView(CreateView):
 
 def blog(request):
     return render(request, 'blog.html')
+
+class BlogView(generic.ListView):
+    model = Blog
+    template_name = 'blog.html'
+    context_object_name = 'blogs'
+
 class BlogDetailView(generic.DetailView):
     model = Blog
     template_name = 'blogdetail.html'
+    context_object_name = 'blogs'
 
 class CertificateView(generic.ListView):
     model = Certificate
     template_name = 'certificate.html'
     paginate_by = 4
+    context_object_name = 'certificates'
+
 class PortfolioView(generic.ListView):
     model = PortfolioProjects
     template_name = 'portfolio.html'
@@ -83,6 +91,7 @@ class PortfolioView(generic.ListView):
 class PortfolioDetailView(generic.DetailView):
     model = PortfolioProjects
     template_name = 'portfoliodetail.html'
+    context_object_name = 'portfolios'
 
 class ContactView(generic.FormView):
     success_url = "home"
@@ -98,3 +107,5 @@ class ContactView(generic.FormView):
         messages.success(self.request, "Success! Thank you for contacting me. I'll get back to you as soon as possible")
         return super().form_valid(form)
 
+
+    
