@@ -29,10 +29,11 @@
 
       <select name="" id="" class="dropbtn">
       <option  class="drop"value="" selected disabled > Contact Me </option>
-      <option  href="">phenolaha@gmail.com</option>
-      <option href="">+254790124161</option>
       <button href="{{home.linkedin }}"><option >Linkedin</option></button>
       <option value="{{ home.github }}">Github</option>
+      <option  href="">email</option>
+      <option href="">phone</option>
+
 
       {% endfor %}
       </select>
@@ -88,34 +89,24 @@
       Both self initiated and tutorial based.
       For more projects, you can visit my Github account where I showcase all my latest projects.</p>
    </div>
-
+ {% for portfolio in portfolios
    <div class='portfolio-content'>
       <div class='box'>
-         <img src="{% static 'images/Skincare.JPG'%}" width="250px" >
-         <p>Skinhub Website </p>
-         <h5> This is my skinhub project </h5>
+      {% if image %}
+         <img src="{{portfolio.image.url}}" width="250px" >
+         {% else %}
+         <p> image does not exist</p>
+         {% endif %}
+         <p>{{portfolio.title}}</p>
+         <h3> {{ portfolio.tools }}</h3>
+         <h5> {{portfolio.brief_description}} </h5>
       </div>
-
-       <div class='box'>
-         <img src="{% static 'images/Skincare.JPG'%}" width="400px" >
-         <p>Skinhub Website </p>
-         <h5> This is my skinhub project </h5>
-      </div>
-
-      <div class='box'>
-         <img src="{% static 'images/Skincare.JPG'%}" width="400px" >
-         <p>Skinhub Website </p>
-         <h5> This is my skinhub project </h5>
-      </div>
-
-      <div class='box'>
-         <img src="{% static 'images/Skincare.JPG'%}" width="400px" >
-         <p>Skinhub Website </p>
-         <h5> This is my skinhub project </h5>
-      </div>
+{% endfor %}
 
    </div>
 </section>
+
+
 <! ----------- blog heading ---------- >
 <section id="blog">
     <div class="blog-heading">
@@ -123,28 +114,25 @@
         <h3> Skin blogs</h3>
     </div>
 
-
+ {% for blog in blogs %}
     <div class="blog-page">
     <div class="container">
         <div class="row">
             <div class="col-3">
-                <img src="{% static "images/Skincare.JPG"%}"  alt="">
+            {% if image %}
+                <img src="{{blog.image.url}}"  alt="" width=50 height=50>
+                {% else %}
+                <p> image doesnt exist </p>
+
+                {% endif %}
                 <br>
                 <br>
-                <h3> Hyperpigmentation Diary</h3>
+                <h3> {{blog.name}}</h3>
+                <br>
+                <br>
+                <h3> {{blog.description}}</h3>
             </div>
-            <div class="col-3">
-                <img src="{% static "images/Skincare.JPG"%}"  alt="">
-                <br>
-                <br>
-                <h3> Hydrated babe</h3>
-            </div>
-            <div class="col-3">
-                <img src="{% static "images/Skincare.JPG"%}"  alt="">
-                <br>
-                <br>
-                <h3> Sunscreen importance</h3>
-            </div>
+            {% endfor %}
         </div>
     </div>
 </div>
