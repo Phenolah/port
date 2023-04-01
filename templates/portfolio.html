@@ -10,36 +10,22 @@
       Both self initiated and tutorial based.
       For more projects, you can visit my Github account where I showcase all my latest projects.</p>
    </div>
-{% for portfolio in portfolios %}
+ {% for portfolio in portfolios
    <div class='portfolio-content'>
       <div class='box'>
-
-         <img src="{% static 'images/Skincare.JPG'%}" width="250px" >
-         <p>{{ portfolio.title}} </p>
-         <h5>{{ portfolio.brief_description}}  </h5>
-      </div>
-       {% if image %}
-       <div class='box'>
-         <img src="{{portfolio.image.url}}" width="400px" >
+      {% if image %}
+         <img src="{{portfolio.image.url}}" width="250px" >
          {% else %}
-         <p> image does not exist</p
-         <p>Skinhub Website </p>
-         <h5> This is my skinhub project </h5>
+         <p> image does not exist</p>
+         {% endif %}
+         <p>{{portfolio.title}}</p>
+         <h3> {{ portfolio.tools }}</h3>
+         <h5> {{portfolio.brief_description}} </h5>
       </div>
-
-      <div class='box'>
-         <img src="{% static 'images/Skincare.JPG'%}" width="400px" >
-         <p>Skinhub Website </p>
-         <h5> This is my skinhub project </h5>
-      </div>
-
-      <div class='box'>
-         <img src="{% static 'images/Skincare.JPG'%}" width="400px" >
-         <p>Skinhub Website </p>
-         <h5> This is my skinhub project </h5>
-      </div>
+{% endfor %}
 
    </div>
 </section>
+
 
 {% endblock%}
