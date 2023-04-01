@@ -2,43 +2,35 @@
 {% load static %}
 {% block content %}
 
-<! --- BlogPage --->
 <! ----------- blog heading ---------- >
 <section id="blog">
     <div class="blog-heading">
         <span> Your Skincare Fairymother</span>
         <h3> Skin blogs</h3>
     </div>
-</section>
 
+ {% for blog in blogs %}
     <div class="blog-page">
     <div class="container">
         <div class="row">
             <div class="col-3">
-                <img src="{% static "image/Skincare.JPG"%}"  alt="">
+            {% if image %}
+                <img src="{{blog.image.url}}"  alt="" width=50 height=50>
+                {% else %}
+                <p> image doesnt exist </p>
+
+                {% endif %}
                 <br>
                 <br>
-                <h3> Hyperpigmentation Diary</h3>
+                <h3> {{blog.name}}</h3>
+                <br>
+                <br>
+                <h3> {{blog.description}}</h3>
             </div>
-            <div class="col-3">
-                <img src="{% static "image/Skincare.JPG"%}"  alt="">
-                <br>
-                <br>
-                <h3> Hydrated babe</h3>
-            </div>
-            <div class="col-3">
-                <img src="{% static "image/Skincare.JPG"%}"  alt="">
-                <br>
-                <br>
-                <h3> Sunscreen importance</h3>
-            </div>
+            {% endfor %}
         </div>
     </div>
 </div>
+</section>
 
-
-
-
-{% endblock %}
-
-
+{% endblock%}
