@@ -1,0 +1,29 @@
+{% extends 'base.html'%}
+{% load static %}
+{%block content%}
+<!-- PortfolioDetailPage -->
+
+{% for portfolio in portfolios%}
+<section>
+<div class="portfoliodetail">
+    <div class="container">
+       <div class="row g-4 g-md-3  align-items-center">
+          <div class="col-md-6">
+             <div class="bannerContent">
+                <h1 class="xlTitle pb-md-3"> {{ portfolio.title}}</h1>
+             </div>
+          </div>
+       </div>
+    </div>
+</div>
+</section>
+
+<section>
+  <div class="bodysection">
+    <div class='container'>
+     {{ portfolio.body }}
+    </div>
+  </div>
+</section>
+{% endfor %}
+{% endblock%}}
