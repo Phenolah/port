@@ -71,6 +71,10 @@ class BlogView(generic.ListView):
     template_name = 'blog.html'
     context_object_name = 'blogs'
 
+    def get_queryset(self):
+        return super().get_queryset().filter(is_active=True)
+
+
 class BlogDetailView(generic.DetailView):
     model = Blog
     template_name = 'blogdetail.html'
@@ -82,11 +86,19 @@ class CertificateView(generic.ListView):
     paginate_by = 4
     context_object_name = 'certificates'
 
+    def get_queryset(self):
+        return super().get_queryset().filter(is_active=True)
+
+
 class PortfolioView(generic.ListView):
     model = PortfolioProjects
     template_name = 'portfolio.html'
     paginate_by = 10
     context_object_name = 'portfolios'
+
+    def get_queryset(self):
+        return super().get_queryset().filter(is_active=True)
+
 
 class PortfolioDetailView(generic.DetailView):
     model = PortfolioProjects
@@ -107,5 +119,3 @@ class ContactView(generic.FormView):
         messages.success(self.request, "Success! Thank you for contacting me. I'll get back to you as soon as possible")
         return super().form_valid(form)
 
-
-    
