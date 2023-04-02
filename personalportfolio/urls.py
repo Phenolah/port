@@ -7,9 +7,9 @@ urlpatterns = [
     path('about/', views.AboutView.as_view(), name='about'),
     path('skills/', views.SkillsView.as_view(), name='skills'),
     path('portfolio/', views.PortfolioView.as_view(), name='portfolio'),
-    path('portfolio/', views.PortfolioDetailView.as_view(), name='portfoliodetail'),
+    path('portfolio<slug:slug>/', views.PortfolioDetailView.as_view(), name='portfoliodetail'),
     path('contact/', views.ContactView.as_view(), name='contact'),
     path('blog/', views.BlogView.as_view(), name="blog"),
-    path('blog/', views.BlogDetailView.as_view(), name='blogdetail'),
+    path('blog/<slug:slug>', views.BlogDetailView.as_view(), name='blogdetail'),
     path('certificate/', views.Certificate, name='certificate'),
 ]
