@@ -22,25 +22,22 @@
    <div class="col-2">
    {% for home in home %}
       <div class="buttons-container">
-      <form action="" method='POST' enctype="multipart/form-data" >
-      {%csrf_token%}
       <button><a href="{{home.cv.url}}" class="download-btn">Download CV</a></button>
-       </form>
-
       <select name="" id="" class="dropbtn">
       <option  class="drop"value="" selected disabled > Contact Me </option>
       <button href="{{home.linkedin }}"><option >Linkedin</option></button>
       <option value="{{ home.github }}">Github</option>
       <option  href="">email</option>
       <option href="">phone</option>
-
-
       {% endfor %}
       </select>
 
    </div>
    </div>
 </section>
+
+<!-- AboutPage -->
+
 <section class="about" id="about">
   <div class="about-img">
      <img src="{% static 'images/about.jpg'%}" width="400px" >
@@ -48,40 +45,49 @@
   <div class="about-text">
     {% for about in about%}
     <h2> {{about.subject}}</h2>
-    <h5> Just <span> a Dev </span></h5>
+    <h6> Just <span> a Dev </span></h6>
     <p> {{about.description}}</p>
+    <h5> languages </h5>
+    <h4> {{about.languages}}</h4>
+    <br>
+    <h5> Frameworks & Libraries </h5>
+    <h4> {{about.frameworks}}</h4>
+    <br>
+    <h5> Others </h5>
+    <h4> {{about.other}}</h4>
+    <br>
+
     {% endfor %}
   </div>
 </section>
+
+<!-- SkillsPage -->
+
 <section class="skills" id="skills">
    <div class="center">
-     <i class='bx bx-cast'></i>
+     <i class='fas fa-graduation-cap'></i>
      <h3>My Skills</h3>
      <p> Here are the skills i have acquired<p>
 
    </div>
-   {% for skill in skills %}
    <div class="skill-content">
-
+   {% for skill in skills %}
    <div class="row">
-   {% if image.url%}
-   <form action="" method='POST' enctype="multipart/form-data" >
-      {%csrf_token%}
-     <img src="{{skill.image.url }}">
-     <i class='bx bx-cast'> <img src="{{skill.image.url }}"></i>
-     </form>
-     {% else %}
-     <p> image does not exist</p>
-     {% endif%}
-     </form>
+   {% if skill.image.url %}
 
+     <i > <img class='skillimage' src="{{skill.image.url }}"></i>
+     {% else %}
+     <p> {{skill.name}}</p>
+     {% endif%}
      <h3>{{skill.name}}</h3>
      <p> {{skill.description}}</p>
      </div>
-
      </div>
+     <br>
      {% endfor %}
 </section>
+<!-- PortfolioPage -->
+
 <section class='portfolio' id='portfolio'>
    <div class='center'>
       <h2> A snippet of some of my Projects! </h2>
@@ -89,7 +95,7 @@
       Both self initiated and tutorial based.
       For more projects, you can visit my Github account where I showcase all my latest projects.</p>
    </div>
- {% for portfolio in portfolios
+ {% for portfolio in portfolios %}
    <div class='portfolio-content'>
       <div class='box'>
       {% if image %}
@@ -106,8 +112,8 @@
    </div>
 </section>
 
+<!-- BlogPage -->
 
-<! ----------- blog heading ---------- >
 <section id="blog">
     <div class="blog-heading">
         <span> Your Skincare Fairymother</span>
@@ -138,7 +144,7 @@
 </div>
 </section>
 
-
+<!-- ContactPage -->
 
 <section class='contact' id='contact'>
   <div class="contact-form">
