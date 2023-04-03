@@ -2,17 +2,24 @@ from django.db import models
 from django.contrib.auth.models import User
 from django.template.defaultfilters import slugify
 from ckeditor.fields import RichTextField
+from cloudinary.models import CloudinaryField
+from django.urls import reverse
 # Create your models here.
 
 class Home(models.Model):
-    cv = models.FileField(blank=True, null=True, upload_to="cv")
-    avatar = models.ImageField(blank=True,null=True, upload_to='avatar')
-    email = models.EmailField(blank=True, null=True)
+    cv = CloudinaryField('images', default=None)
+    linkedin = models.URLField(blank=True, null=True)
+    github = models.URLField(blank=True, null=True)
+
+
 
 class About(models.Model):
     subject = models.CharField(max_length=50, blank=True, null=True)
-    image = models.ImageField(blank=True, null=True, upload_to='about')
+    image = CloudinaryField('images')
     description = models.TextField(blank=True, null=True)
+    languages = models.CharField(max_length=200, blank=True, null=True)
+    frameworks = models.CharField(max_length=200, blank=True, null=True)
+    other = models.CharField(max_length=200, blank=True, null=True)
 
 class Skills(models.Model):
     class Meta:
@@ -21,9 +28,11 @@ class Skills(models.Model):
 
     name = models.CharField(max_length=50, blank=True, null=True)
     description = models.TextField()
-    image = models.FileField(blank=True, null=True, upload_to="images")
+    image = CloudinaryField('images' )
+
     def __str__(self):
-        return f"{self.name}"
+        return self.name
+
 
 class Contact(models.Model):
     class Meta:
@@ -45,7 +54,7 @@ class PortfolioProfile(models.Model):
         verbose_name = 'portfolio profile'
 
     user = models.OneToOneField(User,on_delete=models.CASCADE)
-    avatar = models.ImageField(blank=True,null=True, upload_to='avatar')
+    avatar = CloudinaryField('images')
     skills = models.ManyToManyField(Skills, blank=True)
     about = models.TextField(blank=True, null=True)
 
@@ -53,7 +62,7 @@ class Media(models.Model):
     class Meta:
         verbose_name_plural='media files'
         verbose_name='media'
-    image = models.ImageField(blank=True, null=True, upload_to='media')
+    image = CloudinaryField('images')
     url = models.URLField(blank=True, null=True)
     name = models.CharField(max_length=200,  blank=True, null=True)
     is_image = models.BooleanField(default=True)
@@ -69,11 +78,11 @@ class PortfolioProjects(models.Model):
     title = models.CharField(max_length=200, blank=True, null=True)
     brief_description = models.TextField(null=True, blank=True)
     body = RichTextField(blank=True, null=True)
-    image = models.ImageField(blank=True, null=True, upload_to='portfolio')
     slug = models.SlugField(null=True, blank=True)
     tools = models.CharField(max_length=200, blank=False, null=False)
     demo = models.URLField()
     github = models.URLField()
+    snap = CloudinaryField('images', null=True, blank=True)
     is_active = models.BooleanField(default=True)
 
     def __str__(self):
@@ -91,9 +100,10 @@ class Certificate(models.Model):
     title = models.CharField(max_length=200, null=True, blank=True)
     description = models.CharField(max_length=500, blank=True, null=True)
     is_active = models.BooleanField(default=True)
-    
+
     def __str__(self):
         return self.name
+
 
 class Blog(models.Model):
     class Meta:
@@ -105,6 +115,11 @@ class Blog(models.Model):
     description = models.TextField(null=True, blank=True)
     body = RichTextField(blank=True, null=True)
     slug = models.SlugField(null=True, blank=True)
-    image = models.ImageField(blank=True, null=True, upload_to="blog")
+    image = CloudinaryField('images')
     is_active = models.BooleanField(default=True)
+
+    def __str__(self):
+        return self.name
+    def get_blog_url(self):
+        return reverse("blogdetails", kwargs={"slug": self.slug})
 
