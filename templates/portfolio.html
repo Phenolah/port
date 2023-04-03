@@ -10,13 +10,15 @@
       Both self initiated and tutorial based.
       For more projects, you can visit my Github account where I showcase all my latest projects.</p>
    </div>
- {% for portfolio in portfolios
+ {% for portfolio in portfolios %}
    <div class='portfolio-content'>
       <div class='box'>
-      {% if image %}
-         <img src="{{portfolio.image.url}}" width="250px" >
+      {% if portfolio.photo.url %}
+
+         <img src="{{portfolio.photo.url}}" width="250px" >
          {% else %}
-         <p> image does not exist</p>
+         <p> {{portfolio.title}}</p>
+
          {% endif %}
          <p>{{portfolio.title}}</p>
          <h3> {{ portfolio.tools }}</h3>
