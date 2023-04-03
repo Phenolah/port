@@ -21,20 +21,20 @@ class HomeView(generic.TemplateView):
 
         context['certificates'] = certificates
         context['blogs'] = blogs
-        context['portfolio'] = portfolio
+        context['portfolios'] = portfolio
         context['about'] = about
         context['home'] = home
         context['skills'] = skills
         return context
+
     def post(self, request, *args, **kwargs):
         form = CvFileForm(request.POST, request.FILES)
         if form.is_valid():
             form.save()
-            return redirect('homepage')
+            return redirect("homepage")
         else:
-            context = self.get_context_data(**kwargs)
-            context['form'] = form
-            return self.render_to_response(context)
+            form = CvFileForm()
+        return render(request, 'home.html', {'form': form})
 
 
 class AboutView(generic.ListView):
@@ -48,23 +48,20 @@ class SkillsView(CreateView):
     template_name = 'skills.html'
     context_object_name = "skills"
 
-
     def get_context_data(self, **kwargs):
-        context = super(SkillsView, self).get_context_data(**kwargs)
+        context = super().get_context_data(**kwargs)
         context['skills'] = Skills.objects.all()
         return context
-    #def upload_image(self, request):
-     #   if request.method == 'POST':
-      #      form = SkillsImageForm(request.POST,request.FILES)
-        #    if form.is_valid():
-         #       skills_photo = Skills()
-          #      skills_photo.save()
-           # else:
-            #    form = SkillsImageForm()
-            #return render(request, 'skills.html', {'form': form})
 
-def blog(request):
-    return render(request, 'blog.html')
+    def post(self, request, *args, **kwargs):
+        form = SkillsImageForm(request.POST, request.FILES)
+        if form.is_valid():
+            form.save()
+            return redirect("homepage")
+        else:
+            form = SkillsImageForm()
+        return render(request, 'skills.html', {'form': form})
+
 
 class BlogView(generic.ListView):
     model = Blog
@@ -93,8 +90,23 @@ class CertificateView(generic.ListView):
 class PortfolioView(generic.ListView):
     model = PortfolioProjects
     template_name = 'portfolio.html'
-    paginate_by = 10
     context_object_name = 'portfolios'
+    form_class = PortfolioImageForm
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['portfolios'] = PortfolioProjects.objects.all()
+        return context
+
+    def post(self, request, *args, **kwargs):
+        form = PortfolioImageForm(request.POST, request.files)
+        if form.is_valid():
+            form.save()
+            return redirect("homepage")
+        else:
+           form = PortfolioImageForm()
+        return render(request, 'portfolio.html', {'form': form})
+
 
     def get_queryset(self):
         return super().get_queryset().filter(is_active=True)
