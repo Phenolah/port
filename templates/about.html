@@ -8,10 +8,20 @@
      <img src="{% static 'images/about.jpg'%}" width="400px" >
   </div>
   <div class="about-text">
-    {% for about in abouts%}
+    {% for about in about%}
     <h2> {{about.subject}}</h2>
-    <h5> Just <span> a Dev </span></h5>
+    <h6> Just <span> a Dev </span></h6>
     <p> {{about.description}}</p>
+    <h5> languages </h5>
+    <p> {{about.languages}}</p>
+    <br>
+    <h5> Frameworks & Libraries </h5>
+    <h4> {{about.frameworks}}</h4>
+    <br>
+    <h5> Others </h5>
+    <h4> {{about.other}}</h4>
+    <br>
+
     {% endfor %}
   </div>
 </section>
