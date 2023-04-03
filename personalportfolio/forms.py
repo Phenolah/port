@@ -41,4 +41,9 @@ class CvFileForm(forms.ModelForm):
     class Meta:
         model=Skills
         fields =('image',)
+        
+ class PortfolioImageForm(forms.ModelForm):
+   class Meta:
+       model = PortfolioProjects
+       fields = ('snap', )       
        
