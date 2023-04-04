@@ -9,7 +9,7 @@
    <div class='main-home'>
    <div class="home-text">
    <div class='row'>
-   <div class="column-2"></div>
+   <div class="column-2">
      <h4> Hello, my name is </h4>
      <h1> Phenolah <span> Awuor</span></h1>
      <h3> I am a Backend web developer <h3>
@@ -112,38 +112,65 @@
    </div>
 </section>
 
-<!-- BlogPage -->
 
-<section id="blog">
-    <div class="blog-heading">
-        <span> Your Skincare Fairymother</span>
-        <h3> Skin blogs</h3>
-    </div>
 
- {% for blog in blogs %}
-    <div class="blog-page">
-    <div class="container">
-        <div class="row">
-            <div class="col-3">
-            {% if image %}
-                <img src="{{blog.image.url}}"  alt="" width=50 height=50>
-                {% else %}
-                <p> image doesnt exist </p>
+<!-- CertificatePage -->
 
-                {% endif %}
-                <br>
-                <br>
-                <h3> {{blog.name}}</h3>
-                <br>
-                <br>
-                <h3> {{blog.description}}</h3>
-            </div>
-            {% endfor %}
+<section class="certificate">
+<div class="container">
+  <div class='center'>
+    <i class='fas fa-certificate'></i>
+    <h3> My Certificates </h3>
+    <p> Here are certificates i have acquired </p>
+    <br>
+  </div>
+</div>
+{% for certificate in certificates%}
+<div class="container">
+  <div class='cert-content'>
+    <div class='col-2' >
+       <div class='row'>
+           <h3> {{certificate.name}} </h3>
+           <h4> {{certificate.title}} </h4>
+           <p>{{certificate.description }}<p>
         </div>
     </div>
+  </div>
 </div>
+{% endfor %}
 </section>
 
+
+<!-- BlogPage -->
+<section class="blog-content">
+<div class="blog-heading">
+    <div class="center">
+        <span> Technical blogs </span>
+        <h3> I craft clear and concise
+        documentation for both technical
+        and non-technical audiences,
+        </h3>
+    </div>
+</div>
+{% for blog in blogs %}
+<div class="blog-page">
+  <div class="container">
+     <div class="row">
+        <div class="col-3">
+        {% if blog.image.url %}
+             <img src="{{blog.image.url}}"  alt="" width=250 height=250 >
+        {% else %}
+              <p>image does not exist </p>
+         {% endif %}
+             <h3> {{blog.name}} </h3>
+             <h3> {{blog.description}}</h3>
+        </div>
+     </div>
+  </div>
+</div>
+
+{% endfor %}
+</section>
 <!-- ContactPage -->
 
 <section class='contact' id='contact'>
