@@ -58,6 +58,9 @@ class PortfolioProfile(models.Model):
     skills = models.ManyToManyField(Skills, blank=True)
     about = models.TextField(blank=True, null=True)
 
+    def __str__(self):
+        return f'{self.user}'
+
 class Media(models.Model):
     class Meta:
         verbose_name_plural='media files'
@@ -67,12 +70,13 @@ class Media(models.Model):
     name = models.CharField(max_length=200,  blank=True, null=True)
     is_image = models.BooleanField(default=True)
 
-    #def save(self, *args, **kwargs):
-        #if self.url:
-            #self.is_image = False
 
-     #def __str__(self):
-         #return f'{self.name}'
+    def save(self, *args, **kwargs):
+        if self.url:
+            self.is_image=False
+
+    def __str__(self):
+        return f'{self.name}'
 
 class PortfolioProjects(models.Model):
     title = models.CharField(max_length=200, blank=True, null=True)
@@ -85,8 +89,14 @@ class PortfolioProjects(models.Model):
     snap = CloudinaryField('images', null=True, blank=True)
     is_active = models.BooleanField(default=True)
 
+
     def __str__(self):
         return self.title
+
+    def save(self, *args, **kwargs):
+        if not self.id:
+            self.slug = slugify(self.name)
+        super(PortfolioProjects, self).save(args, **kwargs)
 
     def get_absolute_url(self):
         return f'/portfolio/{self.slug}'
@@ -118,8 +128,14 @@ class Blog(models.Model):
     image = CloudinaryField('images')
     is_active = models.BooleanField(default=True)
 
+    def save(self, *args, **kwargs):
+        if not self.id:
+            self.slug = slugify(self.name)
+        super(Blog, self).save(args, **kwargs)
+
     def __str__(self):
         return self.name
+
     def get_blog_url(self):
-        return reverse("blogdetails", kwargs={"slug": self.slug})
+        return f'/blog/{self.slug}'
 
