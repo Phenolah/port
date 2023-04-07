@@ -6,6 +6,7 @@ from django.views import generic
 from django.views.generic import CreateView,ListView
 from django.conf import settings
 from .mixins import Directions
+from django.urls import reverse_lazy
 # Create your views here.
 
 class HomeView(generic.TemplateView):
@@ -35,7 +36,7 @@ class HomeView(generic.TemplateView):
         form=ContactForm()
         if form.is_valid():
             form.save()
-            return redirect("homepage")
+            return redirect("contact")
         else:
             form = ContactForm()
         return render(request, 'home.html', {'form':form})
@@ -133,11 +134,6 @@ class CertificateView(generic.ListView):
     paginate_by = 4
     context_object_name = 'certificates'
 
-    #def get_context_data(self, **kwargs):
-        #context = super().get_context_data(**kwargs)
-        #context["certificates"] = Certificate.objects.all()
-        #return context
-
     def get_queryset(self):
         return super().get_queryset().filter(is_active=True)
 
@@ -173,14 +169,15 @@ class PortfolioDetailView(generic.DetailView):
     context_object_name = 'portfolios'
 
 class ContactView(generic.FormView):
-    success_url = "home"
+    success_url = reverse_lazy("homepage")
     template_name = 'contact.html'
     model = Contact
     form_class = ContactForm
 
 
     def form_valid(self, form):
-        form.instance.created_by = self.request.user
-        form.save()
+        profile = form.save(commit=False)
+        profile.user = self.request.user
+        profile.save()
         messages.success(self.request, "Success! Thank you for contacting me. I'll get back to you as soon as possible")
         return super().form_valid(form)
