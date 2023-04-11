@@ -165,3 +165,5 @@ CLOUDINARY_STORAGE = {
     'SECURE': True
 }
 GOOGLE_API_KEY = 'AIzaSyDdmotz33aAHDO8EUzU3bZqy_YsAF9isqo'
+
+GEOIP_PATH = os.path.join(BASE_DIR, 'geoip')
