@@ -46,4 +46,6 @@ class CvFileForm(forms.ModelForm):
    class Meta:
        model = PortfolioProjects
        fields = ('snap', )       
-       
+ class MeasurementModelForm(forms.ModelForm):
+    model = Measurement
+    fields = ('destination', )      
