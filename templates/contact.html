@@ -33,9 +33,12 @@
 
   </form>
   </div>
-  <div class='contact-img'>
-      <img src="{% static 'images/Skincare.JPG'%}" width="400px" >
-
+  <div >
+    <form action="" method="POST" autocomplete="off">
+    {% csrf_token %}
+    {{m_form|crispy}}
+    <button type="submit" class="btn btn-primary"> confirm</button>
+    </form>
   </div>
 </section>
 
