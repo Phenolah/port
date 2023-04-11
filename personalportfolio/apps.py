@@ -5,6 +5,8 @@ class PersonalportfolioConfig(AppConfig):
     default_auto_field = 'django.db.models.BigAutoField'
     name = 'personalportfolio'
     
-        def ready(self):
-        import signals
+class MeasurementConfig(AppConfig):
+    name = 'measurements'
+    verbose_name = 'Measurement between 2 locations'
+
 
