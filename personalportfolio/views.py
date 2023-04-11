@@ -1,4 +1,4 @@
-from django.shortcuts import render, HttpResponse, redirect
+from django.shortcuts import render, get_object_or_404, HttpResponse, redirect
 from .forms import *
 from .models import *
 from django.contrib import messages
@@ -7,6 +7,7 @@ from django.views.generic import CreateView,ListView
 from django.conf import settings
 from .mixins import Directions
 from django.urls import reverse_lazy
+from geopy.geocoders import Nominatim
 # Create your views here.
 
 class HomeView(generic.TemplateView):
@@ -32,30 +33,39 @@ class HomeView(generic.TemplateView):
         context['skills'] = skills
         context['contact'] = contact
         return context
-    def post(self, request, *args, **kwargs):
-        form=ContactForm()
-        if form.is_valid():
-            form.save()
-            return redirect("contact")
-        else:
-            form = ContactForm()
-        return render(request, 'home.html', {'form':form})
 
-
-    def post(self, request, *args, **kwargs):
-        form = CvFileForm(request.POST, request.FILES)
-        if form.is_valid():
-            form.save()
+    def post(self,request, *args, **kwargs):
+        contact_form = ContactForm(request.POST)
+        cv_form = CvFileForm(request.POST, request.FILES)
+        if contact_form.is_valid():
+            contact_form.save()
+            return redirect('contact')
+        elif cv_form.is_valid():
+            cv_form.save()
             return redirect("homepage")
         else:
-            form = CvFileForm()
-        return render(request, 'home.html', {'form': form})
+            context = self.get_context_data(**kwargs)
+            context['contact_form'] =contact_form
+            context['cv_form'] = cv_form
+            return self.render_to_response(context)
 
     def form_valid(self, form):
-        form.instance.created_by = self.request
-        form.save()
+        # Create a new Contact object with the submitted form data
+        contact = Contact(
+            name=form.cleaned_data['name'],
+            email=form.cleaned_data['email'],
+            subject=form.cleaned_data['subject'],
+            message=form.cleaned_data['message'],
+        )
+        contact.save()
+
+        # Add a success message to the user's session
         messages.success(self.request, "Success! Thank you for contacting me. I'll get back to you as soon as possible")
+
+
+        # Redirect the user to the success page
         return super().form_valid(form)
+
     def route(self, request):
         context = {"google_api_key": settings.GOOGLE_API_KEY}
         return render(request, 'main/route.html', context)
@@ -174,10 +184,38 @@ class ContactView(generic.FormView):
     model = Contact
     form_class = ContactForm
 
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        obj = get_object_or_404(Measurement, id=1)
+        measurement_form = MeasurementModelForm(self.request.POST or None)
+        geolocator = Nominatim(user_agent="measurements")
+
+        if measurement_form.is_valid():
+            instance = measurement_form.save(commit=False)
+            destination_ = measurement_form.cleaned_data.get('destination')
+            destination = geolocator.geocode(destination_)
+            print(destination)
+
+            instance.location = "Nairobi"
+            instance.distance = 5000.0
+            #instance.save()
+
+        context['distance'] = obj
+        context['m_form'] = measurement_form
+        return context
 
     def form_valid(self, form):
-        profile = form.save(commit=False)
-        profile.user = self.request.user
-        profile.save()
+        # Create a new Contact object with the submitted form data
+        contact = Contact(
+            name=form.cleaned_data['name'],
+            email=form.cleaned_data['email'],
+            subject=form.cleaned_data['subject'],
+            message=form.cleaned_data['message'],
+        )
+        contact.save()
+
+        # Add a success message to the user's session
         messages.success(self.request, "Success! Thank you for contacting me. I'll get back to you as soon as possible")
+
+        # Redirect the user to the success page
         return super().form_valid(form)
