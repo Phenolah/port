@@ -1,6 +1,5 @@
 {% extends 'base.html'%}
 {% load static %}
-{%  load crispy_forms_tags%}
 {% load cloudinary %}
 {%block content%}
 
@@ -20,15 +19,15 @@
      </div>
    </div>
    <div class="col-2">
-   {% for home in home %}
+   {% for home in homes %}
       <div class="buttons-container">
       <button><a href="{{home.cv.url}}" class="download-btn">Download CV</a></button>
-      <select name="" id="" class="dropbtn">
+      <select onchange="if (this.value) window.location.href=this.value;" class="dropbtn">
       <option  class="drop"value="" selected disabled > Contact Me </option>
-      <button href="{{home.linkedin }}"><option >Linkedin</option></button>
-      <option value="{{ home.github }}">Github</option>
-      <option  href="">email</option>
-      <option href="">phone</option>
+      <button><a href="{{home.linkedin}}">Linkedin</a></button>
+      <a href="{{home.github}}"><option>Github</option></a>
+      <a href=""><option>email</option></a>
+      <a href=""><option>Linkedin</option></a>
       {% endfor %}
       </select>
 
@@ -96,21 +95,28 @@
       For more projects, you can visit my Github account where I showcase all my latest projects.</p>
    </div>
  {% for portfolio in portfolios %}
+ {% if portfolio.is_active%}
    <div class='portfolio-content'>
       <div class='box'>
-      {% if image %}
-         <img src="{{portfolio.image.url}}" width="250px" >
+      {% if portfolio.photo.url %}
+
+         <img src="{{portfolio.photo.url}}" width="250px" >
          {% else %}
-         <p> image does not exist</p>
+         <p> {{portfolio.title}}</p>
+
          {% endif %}
          <p>{{portfolio.title}}</p>
          <h3> {{ portfolio.tools }}</h3>
          <h5> {{portfolio.brief_description}} </h5>
+         <a href="{%url 'portfoliodetail'%}">View Project <span>&#x2192;</span></a>
+
       </div>
+{% endif %}
 {% endfor %}
 
    </div>
 </section>
+
 
 
 
@@ -126,6 +132,7 @@
   </div>
 </div>
 {% for certificate in certificates%}
+{% if certficate.is_active%}
 <div class="container">
   <div class='cert-content'>
     <div class='col-2' >
@@ -137,6 +144,7 @@
     </div>
   </div>
 </div>
+{% endif %}
 {% endfor %}
 </section>
 
@@ -177,7 +185,9 @@
   <div class="contact-form">
   <h2>Hire Me</h2>
   <p> I am available for freelance work </p>
-  <form action="">
+
+  <form action="/contact/" method="POST" id="contactForm">
+      {%csrf_token%}
       <h3> Name </h3>
       <div>
       {{form.name}}
@@ -197,10 +207,14 @@
       <div class="message">
       {{form.message}}
       </div>
+     <button class="send" type="submit" value="submit"> Submit </button>
 
+  </form>
   </div>
   <div class='contact-img'>
       <img src="{% static 'images/Skincare.JPG'%}" width="400px" >
+
   </div>
 </section>
+
 {% endblock%}
