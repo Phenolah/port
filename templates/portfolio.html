@@ -1,5 +1,6 @@
 {% extends 'base.html'%}
 {% load static %}
+{% load cloudinary %}
 {%block content%}
 <!-- PortfolioPage -->
 
@@ -11,6 +12,7 @@
       For more projects, you can visit my Github account where I showcase all my latest projects.</p>
    </div>
  {% for portfolio in portfolios %}
+ {% if portfolio.is_active%}
    <div class='portfolio-content'>
       <div class='box'>
       {% if portfolio.photo.url %}
@@ -23,7 +25,10 @@
          <p>{{portfolio.title}}</p>
          <h3> {{ portfolio.tools }}</h3>
          <h5> {{portfolio.brief_description}} </h5>
+         <a href="{%url 'portfoliodetail'%}">View Project <span>&#x2192;</span></a>
+
       </div>
+{% endif %}
 {% endfor %}
 
    </div>
