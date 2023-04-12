@@ -8,6 +8,8 @@ from django.conf import settings
 from .mixins import Directions
 from django.urls import reverse_lazy
 from geopy.geocoders import Nominatim
+from .utils import get_geo
+from django.contrib.gis.geoip2 import GeoIP2
 # Create your views here.
 
 class HomeView(generic.TemplateView):
@@ -29,7 +31,7 @@ class HomeView(generic.TemplateView):
         context['blogs'] = blogs
         context['portfolios'] = portfolio
         context['about'] = about
-        context['home'] = home
+        context['homes'] = home
         context['skills'] = skills
         context['contact'] = contact
         return context
@@ -190,11 +192,19 @@ class ContactView(generic.FormView):
         measurement_form = MeasurementModelForm(self.request.POST or None)
         geolocator = Nominatim(user_agent="measurements")
 
+        ip = '72.14.207.99'
+        country, city, lat, lon = get_geo(ip)
+        print('Country',country)
+        print('City',city)
+        print("latitude, longitude",lat, lon)
+
         if measurement_form.is_valid():
             instance = measurement_form.save(commit=False)
             destination_ = measurement_form.cleaned_data.get('destination')
             destination = geolocator.geocode(destination_)
             print(destination)
+            d_long = destination.longitude
+            d_lat = destination.latitude
 
             instance.location = "Nairobi"
             instance.distance = 5000.0
@@ -219,3 +229,8 @@ class ContactView(generic.FormView):
 
         # Redirect the user to the success page
         return super().form_valid(form)
+
+
+
+
+
