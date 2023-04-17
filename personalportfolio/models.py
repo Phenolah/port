@@ -7,9 +7,14 @@ from django.urls import reverse
 # Create your models here.
 
 class Home(models.Model):
-    cv = CloudinaryField('images', default=None)
+    #cv = CloudinaryField('cv')
+    cv = models.FileField(upload_to='cv/', storage=RawMediaCloudinaryStorage())
     linkedin = models.URLField(blank=True, null=True)
     github = models.URLField(blank=True, null=True)
+
+    def __str__(self):
+        return f"Home {self.pk}"
+
 
 
 
