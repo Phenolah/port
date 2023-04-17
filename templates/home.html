@@ -98,9 +98,9 @@
  {% if portfolio.is_active%}
    <div class='portfolio-content'>
       <div class='box'>
-      {% if portfolio.photo.url %}
+      {% if portfolio.image.url %}
 
-         <img src="{{portfolio.photo.url}}" width="250px" >
+         <img src="{{portfolio.image.url}}" width="250px" >
          {% else %}
          <p> {{portfolio.title}}</p>
 
@@ -108,7 +108,7 @@
          <p>{{portfolio.title}}</p>
          <h3> {{ portfolio.tools }}</h3>
          <h5> {{portfolio.brief_description}} </h5>
-         <a href="{%url 'portfoliodetail'%}">View Project <span>&#x2192;</span></a>
+         <a href="{{portfolio.get_absolute_url}}">View Project <span>&#x2192;</span></a>
 
       </div>
 {% endif %}
@@ -132,7 +132,7 @@
   </div>
 </div>
 {% for certificate in certificates%}
-{% if certficate.is_active%}
+
 <div class="container">
   <div class='cert-content'>
     <div class='col-2' >
@@ -144,7 +144,7 @@
     </div>
   </div>
 </div>
-{% endif %}
+
 {% endfor %}
 </section>
 
@@ -190,22 +190,22 @@
       {%csrf_token%}
       <h3> Name </h3>
       <div>
-      {{form.name}}
+      {{contact_form.name}}
       </div>
 
       <h3> Email </h3>
       <div>
-      {{form.email}}
+      {{contact_form.email}}
       </div>
 
        <h3> Subject </h3>
       <div>
-      {{form.subject}}
+      {{contact_form.subject}}
       </div>
 
        <h3> Message </h3>
       <div class="message">
-      {{form.message}}
+      {{contact_form.message}}
       </div>
      <button class="send" type="submit" value="submit"> Submit </button>
 
