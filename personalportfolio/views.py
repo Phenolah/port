@@ -15,7 +15,6 @@ from django.contrib.gis.geoip2 import GeoIP2
 class HomeView(generic.TemplateView):
     template_name = 'home.html'
     context_object_name = 'homes'
-    form_class = ContactForm
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
@@ -37,11 +36,23 @@ class HomeView(generic.TemplateView):
         return context
 
     def post(self,request, *args, **kwargs):
+        print('HomeView.get_context_data() was called')
         contact_form = ContactForm(request.POST)
         cv_form = CvFileForm(request.POST, request.FILES)
         if contact_form.is_valid():
-            contact_form.save()
-            return redirect('contact')
+            # Create a new Contact object with the submitted form data
+            contact = Contact(
+                name=contact_form.cleaned_data['name'],
+                email=contact_form.cleaned_data['email'],
+                subject=contact_form.cleaned_data['subject'],
+                message=contact_form.cleaned_data['message'],
+            )
+            contact.save()
+            # Add a success message to the user's session
+            messages.success(self.request,
+                             "Success! Thank you for contacting me. I'll get back to you as soon as possible")
+            # Redirect the user to the success page
+            return super().form_valid(contact_form)
         elif cv_form.is_valid():
             cv_form.save()
             return redirect("homepage")
@@ -60,11 +71,8 @@ class HomeView(generic.TemplateView):
             message=form.cleaned_data['message'],
         )
         contact.save()
-
         # Add a success message to the user's session
         messages.success(self.request, "Success! Thank you for contacting me. I'll get back to you as soon as possible")
-
-
         # Redirect the user to the success page
         return super().form_valid(form)
 
@@ -158,7 +166,7 @@ class PortfolioView(generic.ListView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context['portfolios'] = PortfolioProjects.objects.all()
+        context['portfolios'] = PortfolioProjects.objects.filter(is_active=True)
         return context
 
     def post(self, request, *args, **kwargs):
@@ -229,8 +237,3 @@ class ContactView(generic.FormView):
 
         # Redirect the user to the success page
         return super().form_valid(form)
-
-
-
-
-
