@@ -10,6 +10,7 @@ from django.urls import reverse_lazy
 from geopy.geocoders import Nominatim
 from .utils import get_geo
 from django.contrib.gis.geoip2 import GeoIP2
+import folium
 # Create your views here.
 
 class HomeView(generic.TemplateView):
@@ -202,24 +203,36 @@ class ContactView(generic.FormView):
 
         ip = '72.14.207.99'
         country, city, lat, lon = get_geo(ip)
-        print('Country',country)
-        print('City',city)
-        print("latitude, longitude",lat, lon)
-
+        location = geolocator.geocode(city)
+        #location coordinates
+        l_lat = lat
+        l_lon = lon
+        pointA = (l_lat, l_lon)
+    
+        #initial folium map
+        m = folium.Map(width=800, height=500,location=pointA)
+        
         if measurement_form.is_valid():
             instance = measurement_form.save(commit=False)
             destination_ = measurement_form.cleaned_data.get('destination')
             destination = geolocator.geocode(destination_)
             print(destination)
-            d_long = destination.longitude
+            #distance coordinates
+            d_lon = destination.longitude
             d_lat = destination.latitude
-
+            #distance coordinates
+            d_lat = destination.latitude
+            d_lon = destination.longitude
+            pointB = (d_lat, d_lon)
+            
+            #folium map modification
             instance.location = "Nairobi"
             instance.distance = 5000.0
             #instance.save()
 
         context['distance'] = obj
         context['m_form'] = measurement_form
+        context['map'] = m
         return context
 
     def form_valid(self, form):
