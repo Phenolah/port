@@ -1,6 +1,7 @@
 {% extends 'base.html'%}
 {% load static %}
 {%block content%}
+{%  load crispy_forms_tags%}
 <!-- ContactPage -->
 
 <section class='contact' id='contact'>
@@ -8,7 +9,7 @@
   <h2>Hire Me</h2>
   <p> I am available for freelance work </p>
 
-  <form action="" method="POST">
+  <form action="/contact/" method="POST" id="contactForm">
       {%csrf_token%}
       <h3> Name </h3>
       <div>
@@ -29,11 +30,12 @@
       <div class="message">
       {{form.message}}
       </div>
-     <button class="send" type="submit"> Submit </button>
+     <button class="send" type="submit" value="submit"> Submit </button>
 
   </form>
   </div>
   <div >
+  {{map|safe}}
     <form action="" method="POST" autocomplete="off">
     {% csrf_token %}
     {{m_form|crispy}}
