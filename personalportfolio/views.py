@@ -3,7 +3,7 @@ from .forms import *
 from .models import *
 from django.contrib import messages
 from django.views import generic
-from django.views.generic import CreateView,ListView
+from django.views.generic import CreateView, ListView
 from django.conf import settings
 from .mixins import Directions
 from django.urls import reverse_lazy
@@ -11,6 +11,8 @@ from geopy.geocoders import Nominatim
 from .utils import get_geo
 from django.contrib.gis.geoip2 import GeoIP2
 import folium
+
+
 # Create your views here.
 
 class HomeView(generic.TemplateView):
@@ -21,7 +23,7 @@ class HomeView(generic.TemplateView):
         context = super().get_context_data(**kwargs)
         home = Home.objects.all()
         about = About.objects.all()
-        skills= Skills.objects.all()
+        skills = Skills.objects.all()
         certificates = Certificate.objects.filter(is_active=True)
         blogs = Blog.objects.filter(is_active=True)
         portfolio = PortfolioProjects.objects.filter(is_active=True)
@@ -36,7 +38,7 @@ class HomeView(generic.TemplateView):
         context['contact'] = contact
         return context
 
-    def post(self,request, *args, **kwargs):
+    def post(self, request, *args, **kwargs):
         print('HomeView.get_context_data() was called')
         contact_form = ContactForm(request.POST)
         cv_form = CvFileForm(request.POST, request.FILES)
@@ -59,7 +61,7 @@ class HomeView(generic.TemplateView):
             return redirect("homepage")
         else:
             context = self.get_context_data(**kwargs)
-            context['contact_form'] =contact_form
+            context['contact_form'] = contact_form
             context['cv_form'] = cv_form
             return self.render_to_response(context)
 
@@ -108,11 +110,11 @@ class HomeView(generic.TemplateView):
         return render(request, 'main/map.html', context)
 
 
-
 class AboutView(generic.ListView):
     model = About
     template_name = 'about.html'
     context_object_name = 'about'
+
 
 class SkillsView(CreateView):
     model = Skills
@@ -149,6 +151,7 @@ class BlogDetailView(generic.DetailView):
     template_name = 'blogdetail.html'
     context_object_name = 'blogs'
 
+
 class CertificateView(generic.ListView):
     model = Certificate
     template_name = 'certificate.html'
@@ -176,9 +179,8 @@ class PortfolioView(generic.ListView):
             form.save()
             return redirect("homepage")
         else:
-           form = PortfolioImageForm()
+            form = PortfolioImageForm()
         return render(request, 'portfolio.html', {'form': form})
-
 
     def get_queryset(self):
         return super().get_queryset().filter(is_active=True)
@@ -188,6 +190,7 @@ class PortfolioDetailView(generic.DetailView):
     model = PortfolioProjects
     template_name = 'portfoliodetail.html'
     context_object_name = 'portfolios'
+
 
 class ContactView(generic.FormView):
     success_url = reverse_lazy("homepage")
@@ -204,31 +207,47 @@ class ContactView(generic.FormView):
         ip = '72.14.207.99'
         country, city, lat, lon = get_geo(ip)
         location = geolocator.geocode(city)
-        #location coordinates
+        # location coordinates
         l_lat = lat
         l_lon = lon
         pointA = (l_lat, l_lon)
-    
-        #initial folium map
-        m = folium.Map(width=800, height=500,location=pointA)
-        
+
+        # initial folium map
+        m = folium.Map(width=800, height=500, location=pointA)
+        # location marker
+        folium.Marker([l_lat, l_lon],tooltip='clock here for more', popup=city['city'],
+                      icon=folium.Icon(color="pink")).add_to(m)
+
         if measurement_form.is_valid():
             instance = measurement_form.save(commit=False)
             destination_ = measurement_form.cleaned_data.get('destination')
             destination = geolocator.geocode(destination_)
             print(destination)
-            #distance coordinates
+            # distance coordinates
             d_lon = destination.longitude
             d_lat = destination.latitude
-            #distance coordinates
+            # distance coordinates
             d_lat = destination.latitude
             d_lon = destination.longitude
             pointB = (d_lat, d_lon)
-            
-            #folium map modification
+
+            #distance calculation
+            #distance = round(geodesic(pointA, pointB).km, 2)
+            # initial folium map
+            m = folium.Map(width=800, height=500, location=pointA)
+            # location marker
+            folium.Marker([d_lat, d_lon], tooltip='clock here for more', popup=destination,
+                  icon = folium.Icon(color="pink")).add_to(m)
+            # location marker
+            folium.Marker([l_lat, l_lon], tooltip='clock here for more', popup=city['city'],
+                          icon=folium.Icon(color="red", icon='cloud')).add_to(m)
+
+            # folium map modification
             instance.location = "Nairobi"
             instance.distance = 5000.0
-            #instance.save()
+            instance.save()
+
+        m = m._repr_html_()
 
         context['distance'] = obj
         context['m_form'] = measurement_form
