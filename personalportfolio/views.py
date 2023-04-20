@@ -8,10 +8,10 @@ from django.conf import settings
 from .mixins import Directions
 from django.urls import reverse_lazy
 from geopy.geocoders import Nominatim
-from .utils import get_geo
+from .utils import *
 from django.contrib.gis.geoip2 import GeoIP2
 import folium
-
+from geopy.distance import geodesic
 
 # Create your views here.
 
@@ -213,7 +213,7 @@ class ContactView(generic.FormView):
         pointA = (l_lat, l_lon)
 
         # initial folium map
-        m = folium.Map(width=800, height=500, location=pointA)
+        m = folium.Map(width=800, height=500, location=get_center_coordinates(l_lat,l_lon), zoom_start=100)
         # location marker
         folium.Marker([l_lat, l_lon],tooltip='clock here for more', popup=city['city'],
                       icon=folium.Icon(color="pink")).add_to(m)
@@ -232,9 +232,9 @@ class ContactView(generic.FormView):
             pointB = (d_lat, d_lon)
 
             #distance calculation
-            #distance = round(geodesic(pointA, pointB).km, 2)
+            distance = round(geodesic(pointA, pointB).km, 2)
             # initial folium map
-            m = folium.Map(width=800, height=500, location=pointA)
+            m = folium.Map(width=800, height=500, location=get_center_coordinates(l_lat, l_lon), zoom_start=get_zoom(distance))
             # location marker
             folium.Marker([d_lat, d_lon], tooltip='clock here for more', popup=destination,
                   icon = folium.Icon(color="pink")).add_to(m)
@@ -242,6 +242,9 @@ class ContactView(generic.FormView):
             folium.Marker([l_lat, l_lon], tooltip='clock here for more', popup=city['city'],
                           icon=folium.Icon(color="red", icon='cloud')).add_to(m)
 
+            #draw the line between location and destination
+            line = folium.Polyline(location=(pointA, pointB), weight=2, color='white')
+            m.add_child(line)
             # folium map modification
             instance.location = "Nairobi"
             instance.distance = 5000.0
