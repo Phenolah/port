@@ -45,6 +45,9 @@ INSTALLED_APPS = [
     'cloudinary',
     'cloudinary_storage',
     'mixins',
+    'geopy',
+    'geoip2',
+    'folium'
 ]
 
 MIDDLEWARE = [
