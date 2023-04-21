@@ -151,6 +151,11 @@ class BlogDetailView(generic.DetailView):
     template_name = 'blogdetail.html'
     context_object_name = 'blogs'
 
+    def get(self, request, *args, **kwargs):
+        blogs = get_object_or_404(Blog, pk=kwargs['pk'])
+        context = {'blogs': blogs}
+        return render(request, 'portfoliodetail.html', context)
+
 
 class CertificateView(generic.ListView):
     model = Certificate
@@ -191,7 +196,12 @@ class PortfolioDetailView(generic.DetailView):
     template_name = 'portfoliodetail.html'
     context_object_name = 'portfolios'
 
+    def get(self, request, *args, **kwargs):
+        projects = get_object_or_404(PortfolioProjects, pk=kwargs['pk'])
+        context = {'portfolios': projects}
+        return render(request, 'portfoliodetail.html', context)
 
+   
 class ContactView(generic.FormView):
     success_url = reverse_lazy("homepage")
     template_name = 'contact.html'
@@ -252,7 +262,7 @@ class ContactView(generic.FormView):
 
         m = m._repr_html_()
 
-        context['distance'] = obj
+        context['distance'] = distance
         context['m_form'] = measurement_form
         context['map'] = m
         return context
