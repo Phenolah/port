@@ -19,3 +19,10 @@ def get_zoom(distance):
         return 4
     else:
         return 2
+def get_ip_address(request):
+    x_forwarded_fro = request.META.get('HTTP_X_FORWARDED_FOR')
+    if x_forwarded_fro:
+        ip = x_forwarded_fro.split(',')[0]
+    else:
+        ip= request.META.get('REMOTE_ADDR')
+    return ip
