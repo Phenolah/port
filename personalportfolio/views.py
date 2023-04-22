@@ -201,7 +201,7 @@ class PortfolioDetailView(generic.DetailView):
         context = {'portfolios': projects}
         return render(request, 'portfoliodetail.html', context)
 
-   
+
 class ContactView(generic.FormView):
     success_url = reverse_lazy("homepage")
     template_name = 'contact.html'
@@ -210,10 +210,14 @@ class ContactView(generic.FormView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
+        distance = None
+        destination = None
         obj = get_object_or_404(Measurement, id=1)
         measurement_form = MeasurementModelForm(self.request.POST or None)
         geolocator = Nominatim(user_agent="measurements")
 
+        ip_ = get_ip_address()
+        print(ip_)
         ip = '72.14.207.99'
         country, city, lat, lon = get_geo(ip)
         location = geolocator.geocode(city)
@@ -262,9 +266,11 @@ class ContactView(generic.FormView):
 
         m = m._repr_html_()
 
+
         context['distance'] = distance
         context['m_form'] = measurement_form
         context['map'] = m
+        context['destination'] = destination
         return context
 
     def form_valid(self, form):
