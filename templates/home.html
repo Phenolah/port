@@ -22,13 +22,32 @@
    {% for home in homes %}
       <div class="buttons-container">
       <button><a href="{{home.cv.url}}" class="download-btn">Download CV</a></button>
+      {% endfor %}
+      <button class="dropbtn" type="button" data-bs-toggle="dropdown"
+       aria-expanded="False"> "Contact Me" ::after</button>
+       <ul class="dropdown-menu">
+          <li>
+              <a class="dropdown-item" target="_blank" href="https://www.whatsapp.com"><i class="fa-brands fa-whatsapp text-green-700"></i>
+                  +254790124161
+              </a>
+          </li>
+          <li>
+              <a class="dropdown-item" target="_blank" href="https://www.https://www.linkedin.com/in/phenolah-otieno-343607212/"><i class="fa-brands fa-linkedin text-blue-700"></i>
+                  linkedin
+              </a>
+          </li>
+          <li>
+              <a class="dropdown-item" target="_blank" href="https://www.https://www.linkedin.com/in/phenolah-otieno-343607212/"><i class="fa-brands fa-linkedin text-blue-700"></i>
+                  Email
+              </a>
+          </li>
+       </ul>
       <select onchange="if (this.value) window.location.href=this.value;" class="dropbtn">
       <option  class="drop"value="" selected disabled > Contact Me </option>
       <button><a href="{{home.linkedin}}">Linkedin</a></button>
       <a href="{{home.github}}"><option>Github</option></a>
       <a href=""><option>email</option></a>
       <a href=""><option>Linkedin</option></a>
-      {% endfor %}
       </select>
 
    </div>
