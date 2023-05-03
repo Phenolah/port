@@ -36,7 +36,7 @@ class ContactForm(forms.ModelForm):
 class CvFileForm(forms.ModelForm):
     class Meta:
         model = Home
-        fields = ('cv',)
+        fields = ('resume',)
  class SkillsImageForm(forms.ModelForm):
     class Meta:
         model=Skills
