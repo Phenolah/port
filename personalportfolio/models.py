@@ -3,6 +3,7 @@ from django.contrib.auth.models import User
 from django.template.defaultfilters import slugify
 from ckeditor.fields import RichTextField
 from cloudinary.models import CloudinaryField
+from cloudinary_storage.storage import RawMediaCloudinaryStorage
 from django.urls import reverse
 # Create your models here.
 
@@ -39,19 +40,6 @@ class Skills(models.Model):
         return self.name
 
 
-class Contact(models.Model):
-    class Meta:
-        verbose_name_plural = "contacts"
-        verbose_name = "contact"
-    name = models.CharField(max_length=100, blank=True, null=True)
-    email = models.EmailField(null=True, blank=True)
-    subject = models.CharField(max_length=100, blank=True, null=True )
-    message = models.TextField(null=True, blank=True)
-    send_time = models.DateTimeField(auto_now_add=True)
-    is_read = models.BooleanField(default=False)
-
-    def __str__(self):
-        return f"{self.subject}"
 
 class PortfolioProfile(models.Model):
     class Meta:
@@ -65,6 +53,21 @@ class PortfolioProfile(models.Model):
 
     def __str__(self):
         return f'{self.user}'
+
+class Contact(models.Model):
+    class Meta:
+        verbose_name_plural = "contacts"
+        verbose_name = "contact"
+    name = models.CharField(max_length=100)
+    email = models.EmailField()
+    subject = models.CharField(max_length=100 )
+    message = models.TextField()
+    send_time = models.DateTimeField(auto_now_add=True)
+    is_read = models.BooleanField(default=False)
+
+    def __str__(self):
+        return f"{self.subject}"
+
 
 class Media(models.Model):
     class Meta:
@@ -91,17 +94,14 @@ class PortfolioProjects(models.Model):
     tools = models.CharField(max_length=200, blank=False, null=False)
     demo = models.URLField()
     github = models.URLField()
-    snap = CloudinaryField('images', null=True, blank=True)
+    image = CloudinaryField('images')
     is_active = models.BooleanField(default=True)
 
 
     def __str__(self):
         return self.title
 
-    def save(self, *args, **kwargs):
-        if not self.id:
-            self.slug = slugify(self.name)
-        super(PortfolioProjects, self).save(args, **kwargs)
+
 
     def get_absolute_url(self):
         return f'/portfolio/{self.slug}'
@@ -133,18 +133,13 @@ class Blog(models.Model):
     image = CloudinaryField('images')
     is_active = models.BooleanField(default=True)
 
-    def save(self, *args, **kwargs):
-        if not self.id:
-            self.slug = slugify(self.name)
-        super(Blog, self).save(args, **kwargs)
-
     def __str__(self):
         return self.name
 
     def get_blog_url(self):
-        return f'/blog/{self.slug}'
-    
-    class Measurement(models.Model):
+        return reverse('blog detail', kwargs={'slug':self.slug})
+
+class Measurement(models.Model):
     location = models.CharField(max_length=200)
     destination = models.CharField(max_length=200)
     distance = models.DecimalField(max_digits=10, decimal_places=2)
@@ -152,5 +147,3 @@ class Blog(models.Model):
 
     def __str__(self):
         return f"Distance from {self.location} to {self.destination} is {self.distance} km"
-
-
