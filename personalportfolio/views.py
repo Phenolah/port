@@ -122,10 +122,11 @@ class BlogDetailView(generic.DetailView):
     template_name = 'blogdetail.html'
     context_object_name = 'blogs'
 
-    def get(self, request, *args, **kwargs):
-        blogs = get_object_or_404(Blog, pk=kwargs['pk'])
-        context = {'blogs': blogs}
-        return render(request, 'portfoliodetail.html', context)
+    def get_object(self, queryset=None):
+        slug = self.kwargs.get('slug')
+        blogs = Blog.objects.get(slug=slug)
+        return blogs
+
 
 
 class CertificateView(generic.ListView):
