@@ -3,14 +3,13 @@
 {%block content%}
 <!-- PortfolioDetailPage -->
 
-{% for blog in blogs %}
 <section>
 <div class="blogdetail">
     <div class="container">
        <div class="row g-4 g-md-3  align-items-center">
           <div class="col-md-6">
              <div class="bannerContent">
-                <h1 class="xlTitle pb-md-3"> {{ blog.name}}</h1>
+                <h1 class="xlTitle pb-md-3"> {{ blogs.name}}</h1>
              </div>
           </div>
        </div>
@@ -21,9 +20,9 @@
 <section>
   <div class="blogsection">
     <div class='container'>
-     {{ blog.body|safe }}
+     {{ blogs.body|safe }}
     </div>
   </div>
 </section>
-{% endfor %}
+
 {% endblock%}
