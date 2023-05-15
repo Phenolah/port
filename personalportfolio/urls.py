@@ -10,7 +10,7 @@ urlpatterns = [
     path('portfolio/<int:pk>', views.PortfolioDetailView.as_view(), name='portfoliodetail'),
     path('contact/', views.ContactView.as_view(), name='contact'),
     path('blog/', views.BlogView.as_view(), name="blog"),
-    path('blog/<int:pk>', views.BlogDetailView.as_view(), name='blogdetail'),
+    path('blog/<slug:slug>', views.BlogDetailView.as_view(), name='blogdetail'),
     path('certificate/', views.CertificateView.as_view(), name='certificate'),
 
 ]
