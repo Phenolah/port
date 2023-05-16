@@ -13,11 +13,15 @@
    </div>
  {% for portfolio in portfolios %}
  {% if portfolio.is_active%}
+   <div class='row'>
+     <div class='column-2'>
    <div class='portfolio-content'>
-      <div class='box'>
-      {% if portfolio.photo.url %}
 
-         <img src="{{portfolio.photo.url}}" width="250px" >
+      <div class='box'>
+
+      {% if portfolio.image.url %}
+
+         <img src="{{portfolio.image.url}}" width="250px" >
          {% else %}
          <p> {{portfolio.title}}</p>
 
@@ -25,14 +29,15 @@
          <p>{{portfolio.title}}</p>
          <h3> {{ portfolio.tools }}</h3>
          <h5> {{portfolio.brief_description}} </h5>
-         <a href="{%url 'portfoliodetail'%}">View Project <span>&#x2192;</span></a>
-
+         <a href="{{portfolio.get_absolute_url}}">View Project <span>&#x2192;</span></a>
       </div>
+      </div>
+       </div>
+
+
 {% endif %}
 {% endfor %}
 
    </div>
 </section>
-
-
 {% endblock%}
