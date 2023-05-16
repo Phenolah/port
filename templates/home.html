@@ -90,8 +90,12 @@
    </div>
  {% for portfolio in portfolios %}
  {% if portfolio.is_active%}
+   <div class='row'>
+     <div class='column-2'>
    <div class='portfolio-content'>
+
       <div class='box'>
+
       {% if portfolio.image.url %}
 
          <img src="{{portfolio.image.url}}" width="250px" >
@@ -103,16 +107,16 @@
          <h3> {{ portfolio.tools }}</h3>
          <h5> {{portfolio.brief_description}} </h5>
          <a href="{{portfolio.get_absolute_url}}">View Project <span>&#x2192;</span></a>
-
       </div>
+      </div>
+       </div>
+
+
 {% endif %}
 {% endfor %}
 
    </div>
 </section>
-
-
-
 
 <!-- CertificatePage -->
 
@@ -129,8 +133,7 @@
 
 <div class="container">
   <div class='cert-content'>
-    <div class='col-2' >
-       <div class='row'>
+    <div class='row' >
            <h3> {{certificate.name}} </h3>
            <h4> {{certificate.title}} </h4>
            <p>{{certificate.description }}<p>
@@ -138,40 +141,41 @@
     </div>
   </div>
 </div>
-
 {% endfor %}
 </section>
 
-
 <!-- BlogPage -->
 <section class="blog-content">
-<div class="blog-heading">
+  <div class="blog-heading">
     <div class="center">
-        <span> Technical blogs </span>
-        <h3> I craft clear and concise
+      <b> Technical blogs </b>
+      <h3> I craft clear and concise
         documentation for both technical
-        and non-technical audiences,
-        </h3>
+        and non-technical audiences.
+      </h3>
     </div>
-</div>
-{% for blog in blogs %}
-<div class="blog-page">
-  <div class="container">
-     <div class="row">
-        <div class="col-3">
-        {% if blog.image.url %}
-             <img src="{{blog.image.url}}"  alt="" width=250 height=250 >
-        {% else %}
-              <p>image does not exist </p>
-         {% endif %}
-             <h3> {{blog.name}} </h3>
-             <h3> {{blog.description}}</h3>
-        </div>
-     </div>
   </div>
-</div>
 
-{% endfor %}
+  <div class="blog-page">
+    {% for blog in blogs %}
+    <div class="col-3">
+      {% if blog.image.url %}
+      <a href="{{ blog.get_absolute_url }}">
+        <img src="{{ blog.image.url }}" alt="" width=250 height=250>
+      </a>
+      <br>
+      <br>
+      {% else %}
+      <p>image does not exist </p>
+      {% endif %}
+      <h3> {{ blog.name }} </h3>
+      <h4> {{ blog.description }}</h4>
+    </div>
+    {% endfor %}
+  </div>
+</section>
+
+
 </section>
 <!-- ContactPage -->
 
@@ -202,7 +206,9 @@
       {{contact_form.message}}
       </div>
      <button class="send" type="submit" value="submit"> Submit </button>
-
+      <br>
+<br>
+<br>
   </form>
   </div>
   <div class='contact-img'>
@@ -211,3 +217,4 @@
 </section>
 
 {% endblock%}
+
