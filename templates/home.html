@@ -186,6 +186,7 @@
 
   <form action="/contact/" method="POST" id="contactForm">
       {%csrf_token%}
+      {{form.as_p }}
       <h3> Name </h3>
       <div>
       {{contact_form.name}}
@@ -205,6 +206,7 @@
       <div class="message">
       {{contact_form.message}}
       </div>
+
      <button class="send" type="submit" value="submit"> Submit </button>
       <br>
 <br>
@@ -213,8 +215,8 @@
   </div>
   <div class='contact-img'>
       <img src="{% static 'images/Skincare.JPG'%}" width="400px" >
+</div>
 
 </section>
 
 {% endblock%}
-
