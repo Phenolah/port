@@ -1,6 +1,7 @@
 💻 My Personal portfolio 💻
 
 Personal portfolio website made with Django framework in the backend, and with CSS and HTML for the frontend. It is a dynamic site so that you can control the content of the site through the admin area.
+
 HOMEPAGE:
 ![Screenshot (57)](https://github.com/Phenolah/port/assets/104977409/e8ab4b7b-5169-461a-a0f6-61e63095b83e)
 
